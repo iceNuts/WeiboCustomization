@@ -91,6 +91,27 @@ BOOL checkAds(){
 }
 %end
 
+%hook WBAdViewContainer
+- (void)presentNextAd{
+	if(checkAds())
+		return;
+	%orig;
+}
+- (void)presentAds{
+	if(checkAds())
+		return;
+	%orig;
+}
+%end
+
+%hook HomeViewController
+- (void)showAd{
+	if(checkAds())
+		return;
+	%orig;
+}
+%end
+
 
 
 
