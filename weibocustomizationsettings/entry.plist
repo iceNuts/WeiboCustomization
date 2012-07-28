@@ -1,0 +1,10 @@
+{
+    entry = {
+	bundle = weibocustomizationsettings;
+	cell = PSLinkCell;
+	detail = weibocustomizationsettingsListController;
+	icon = weibocustomizationsettings.png;
+	isController = 1;
+	label = WeiboCustomization;
+    };
+}

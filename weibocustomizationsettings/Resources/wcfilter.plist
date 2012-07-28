@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>defaults</key>
+			<string>com.icenuts.wcsettings</string>
+			<key>key</key>
+			<string>key1</string>
+			<key>label</key>
+			<string>关键字1:</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>defaults</key>
+			<string>com.icenuts.wcsettings</string>
+			<key>key</key>
+			<string>key2</string>
+			<key>label</key>
+			<string>关键字2:</string>
+		</dict>	
+		<dict>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>defaults</key>
+			<string>com.icenuts.wcsettings</string>
+			<key>key</key>
+			<string>key3</string>
+			<key>label</key>
+			<string>关键字3:</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>defaults</key>
+			<string>com.icenuts.wcsettings</string>
+			<key>key</key>
+			<string>key4</string>
+			<key>label</key>
+			<string>关键字4:</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>defaults</key>
+			<string>com.icenuts.wcsettings</string>
+			<key>key</key>
+			<string>key5</string>
+			<key>label</key>
+			<string>关键字5:</string>
+		</dict>	
+	</array>
+	<key>title</key>
+	<string>关键字</string>
+</dict>
+</plist>

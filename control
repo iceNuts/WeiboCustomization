@@ -1,0 +1,9 @@
+Package: com.icenuts.weibocustomization
+Name: WeiboCustomization
+Depends: mobilesubstrate
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: An awesome MobileSubstrate tweak!
+Maintainer: _iceNuts
+Author: _iceNuts
+Section: Tweaks

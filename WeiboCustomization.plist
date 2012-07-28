@@ -1,0 +1,8 @@
+{ Filter = 
+	{ 
+		Bundles = ( 
+				"com.sina.weibo",
+				"com.apple.springboard", 
+			); 
+	}; 
+}

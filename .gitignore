@@ -1,0 +1,6 @@
+*/obj/*
+*.o
+*.DS_Store
+*_/
+*obj/*
+*.deb
