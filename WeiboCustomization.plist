@@ -2,6 +2,7 @@
 	{ 
 		Bundles = ( 
 				"com.sina.weibo",
+				"com.sina.weibohd",
 				"com.apple.springboard", 
 			); 
 	}; 

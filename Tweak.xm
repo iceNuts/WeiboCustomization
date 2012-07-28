@@ -66,17 +66,28 @@ BOOL being_blocked(id request){
 }
 %end
 
-//Remove Ads
-%hook WBAdManager
-- (void)presentAds{
-	%log;
+BOOL checkAds(){
 	CPDistributedMessagingCenter *center;
 	center = [CPDistributedMessagingCenter centerNamed:@"com.icenuts.weibo.ads"];
 	NSDictionary* reply = [center sendMessageAndReceiveReplyName:@"com.icenuts.ads.remove" userInfo: nil];
 	if([[reply valueForKey: @"msg"] isEqualToString: @"1"])
-		return;
+		return YES;
 	else
-		%orig;
+		return NO;
+}
+
+//Remove Ads
+%hook WBAdManager
+- (void)loadServerAd{
+	NSLog(@"--Ads Server--");
+	if(checkAds())
+		return;
+	%orig;
+}
+- (void)presentAds{
+	if(checkAds())
+		return;
+	%orig;
 }
 %end
 
