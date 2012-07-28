@@ -3,6 +3,7 @@ include theos/makefiles/common.mk
 
 TWEAK_NAME = WeiboCustomization
 WeiboCustomization_FILES = Tweak.xm
+WeiboCustomization_PRIVATE_FRAMEWORKS= AppSupport
 SUBPROJECTS = weibocustomizationsettings
 
 include $(THEOS_MAKE_PATH)/tweak.mk

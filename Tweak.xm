@@ -1,5 +1,11 @@
 #define PrefFilePath @"/var/mobile/Library/Preferences/com.icenuts.wcsettings.plist" 
 
+@interface CPDistributedMessagingCenter
++ (id)centerNamed:(id)arg1;
+- (BOOL)sendMessageName:(id)arg1 userInfo:(id)arg2;
+- (id)sendMessageAndReceiveReplyName:(id)arg1 userInfo:(id)arg2;
+@end
+
 BOOL being_blocked(id request){
 	//For request from Weibo(block all?) & having filtered words
 	id pref = [[NSDictionary alloc] initWithContentsOfFile: PrefFilePath];
@@ -26,6 +32,31 @@ BOOL being_blocked(id request){
 }
 
 %hook BBServer
+- (id)init{
+	CPDistributedMessagingCenter *
+		center = [CPDistributedMessagingCenter centerNamed:@"com.icenuts.weibo.ads"];
+		if(![center doesServerExist]){
+			[center runServerOnCurrentThread];
+			[center registerForMessageName:@"com.icenuts.ads.remove" target:self selector:@selector(handleWeiboAds:userInfo:)];
+		}
+	return %orig;
+}
+
+%new(@@:@@)
+- (NSDictionary*)handleWeiboAds:(NSString *)name userInfo:(NSDictionary *)userInfo{
+	if([name isEqualToString:@"com.icenuts.ads.remove"]){
+		NSDictionary* reply;
+		id pref = [[NSDictionary alloc] initWithContentsOfFile: PrefFilePath];
+		BOOL Ads = [[pref objectForKey: @"removeAds"] boolValue];
+		if(Ads)
+			reply = [NSDictionary dictionaryWithObjectsAndKeys: @"1", @"msg",nil ];
+		else
+			reply = [NSDictionary dictionaryWithObjectsAndKeys: @"0", @"msg",nil ];		
+		return reply;
+	}
+}
+
+//Disable Push
 -(void)_publishBulletinRequest:(id)request forDataProvider:(id)dataProvider forDestinations:(int)destinations{
 	NSLog(@"Missile: Incoming");
 	if(being_blocked(request)){
@@ -34,3 +65,27 @@ BOOL being_blocked(id request){
 	%orig;
 }
 %end
+
+//Remove Ads
+%hook WBAdManager
+- (void)presentAds{
+	%log;
+	CPDistributedMessagingCenter *center;
+	center = [CPDistributedMessagingCenter centerNamed:@"com.icenuts.weibo.ads"];
+	NSDictionary* reply = [center sendMessageAndReceiveReplyName:@"com.icenuts.ads.remove" userInfo: nil];
+	if([[reply valueForKey: @"msg"] isEqualToString: @"1"])
+		return;
+	else
+		%orig;
+}
+%end
+
+
+
+
+
+
+
+
+
+
