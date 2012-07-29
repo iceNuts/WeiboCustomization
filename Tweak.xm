@@ -112,7 +112,16 @@ BOOL checkAds(){
 }
 %end
 
-
+%hook TweetterAppDelegate
+- (void)showAd{
+	NSLog(@"Ad: Sorry Majesty, I won't show again!");
+	if(checkAds()){
+		[self showAppContent];
+		return;
+	}
+	%orig;
+}
+%end
 
 
 
