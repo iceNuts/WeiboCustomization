@@ -140,6 +140,48 @@ BOOL checkAds(){
 }
 %end
 
+%hook DXAdControlWithCache
+- (id)initWithCustom:(id)arg1 adRequest:(id)arg2 adSize:(id)arg3 posId:(id)arg4 refreshCacheInterval:(int)arg5{
+	if(checkAds()){
+		return nil;
+	}
+	%orig;
+}
+- (id)initWithCustom:(id)arg1 adSize:(id)arg2 posId:(id)arg3 refreshCacheInterval:(int)arg4{
+	if(checkAds()){
+		return nil;
+	}
+	%orig;
+}
+%end
+
+%hook DXAdWBControlWithCache
+- (id)initWithCustom:(id)arg1 adRequest:(id)arg2 adSize:(id)arg3 posId:(id)arg4 refreshCacheInterval:(int)arg5{
+	if(checkAds()){
+		return nil;
+	}
+	%orig;
+}
+- (id)initWithCustom:(id)arg1 adSize:(id)arg2 posId:(id)arg3 refreshCacheInterval:(int)arg4{
+	if(checkAds()){
+		return nil;
+	}
+	%orig;
+}
+%end
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
