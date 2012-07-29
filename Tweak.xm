@@ -123,6 +123,23 @@ BOOL checkAds(){
 }
 %end
 
+%hook WBContentAdHintBoard
+- (void)settingContentAdPhoto:(id)arg1{
+	NSLog(@"HintBoard: Sorry Majesty, I won't show again!");
+	if(checkAds()){
+		return;
+	}
+	%orig;
+}
+- (id)initWithFrame:(struct CGRect)arg1 dismissDirection:(int)arg2{
+	NSLog(@"HintBoard: Sorry Majesty, I won't show again!");
+	if(checkAds()){
+		return nil;
+	}
+	%orig;
+}
+%end
+
 
 
 
