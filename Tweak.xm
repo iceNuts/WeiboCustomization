@@ -140,4 +140,44 @@ BOOL checkAds(){
 }
 %end
 
+//Remove iPad Ads
+%hook AdContainerViewController
+- (void)presentAdView:(id)arg1{
+	NSLog(@"iPad Ads: Sorry Majesty, I won't show again!");
+	if(checkAds()){
+		return;
+	}
+	%orig;
+}
+%end
+
+%hook AdManager
+- (void)loadServerAds{
+	NSLog(@"iPad Ads: Sorry Majesty, I won't show again!");
+	if(checkAds()){
+		return;
+	}
+	%orig;
+}
+- (void)startPresenting{
+	NSLog(@"iPad Ads: Sorry Majesty, I won't show again!");
+	if(checkAds()){
+		return;
+	}
+	%orig;
+}
+- (void)startNewPresenting{
+	NSLog(@"iPad Ads: Sorry Majesty, I won't show again!");
+	if(checkAds()){
+		return;
+	}
+	%orig;
+}
+%end
+
+
+
+
+
+
 
