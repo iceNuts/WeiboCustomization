@@ -175,9 +175,52 @@ BOOL checkAds(){
 }
 %end
 
-
-
-
-
-
-
+//Filter timeline for iPhone
+BOOL CellFilter(id cell){
+	Class $WBStatus = objc_getClass("WBStatus");
+	if([cell isKindOfClass: [$WBStatus class]]){
+		if([cell hasRetweet]){
+			id retweet = [cell retweetedStatus];
+			NSRange range = [[retweet text] rangeOfString: @"奥运会" options: 0];
+			if(range.location != NSNotFound){
+				return YES;
+			}
+		}
+		//For others
+		NSRange range = [[cell text] rangeOfString: @"奥运会" options: 0];
+		if(range.location != NSNotFound){
+			return YES;
+		}
+	}
+	return NO;
+}
+%hook WBTimelineTableViewController
+id tableView;
+id indexPath;
+- (void)scrollViewDidScroll:(id)arg1{
+	Ivar var;
+	var = class_getInstanceVariable([self class], "_timelineItems");
+	id _items = object_getIvar(self, var);
+	id _cell = nil;
+	@try{
+	if(indexPath)
+		_cell = [_items objectAtIndex: [indexPath row]];
+	}
+	@catch (NSException * e){
+		%orig;
+		return;
+	}
+	if(CellFilter(_cell)){
+		NSLog(@"Halo: Master, I have removed a row");
+		[_items removeObjectAtIndex: [indexPath row]];
+		[tableView reloadData];
+		indexPath = nil;
+	}
+	%orig;
+}
+- (id)tableView:(id)arg1 cellForRowAtIndexPath:(id)arg2{
+	tableView = [arg1 retain];
+	indexPath = [arg2 retain];
+	%orig;
+}
+%end

@@ -3,6 +3,7 @@ include theos/makefiles/common.mk
 
 TWEAK_NAME = WeiboCustomization
 WeiboCustomization_FILES = Tweak.xm
+WeiboCustomization_FRAMEWORKS= UIKit
 WeiboCustomization_PRIVATE_FRAMEWORKS= AppSupport
 SUBPROJECTS = weibocustomizationsettings
 
