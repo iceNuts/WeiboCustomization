@@ -176,19 +176,34 @@ BOOL checkAds(){
 %end
 
 //Filter timeline for iPhone
-BOOL CellFilter(id cell){
-	Class $WBStatus = objc_getClass("WBStatus");
-	if([cell isKindOfClass: [$WBStatus class]]){
-		if([cell hasRetweet]){
-			id retweet = [cell retweetedStatus];
-			NSRange range = [[retweet text] rangeOfString: @"奥运会" options: 0];
+BOOL CellCheck(id pref, id cell){
+	for(int i = 1; i <= 5; i++){
+		id str = [pref valueForKey: [@"dangerkey" stringByAppendingFormat: @"%i", i]];
+		if(str){
+			NSRange range = [[cell text] rangeOfString: str options: 0];
 			if(range.location != NSNotFound){
 				return YES;
 			}
 		}
-		//For others
-		NSRange range = [[cell text] rangeOfString: @"奥运会" options: 0];
-		if(range.location != NSNotFound){
+	}
+	return NO;
+}
+
+BOOL CellFilter(id cell){
+	id pref = [[NSDictionary alloc] initWithContentsOfFile: PrefFilePath];
+	BOOL isEnabled = [[pref objectForKey: @"dangerenabled"] boolValue];
+	if(!isEnabled){
+		return NO;
+	}
+	Class $WBStatus = objc_getClass("WBStatus");
+	if([cell isKindOfClass: [$WBStatus class]]){
+		if([cell hasRetweet]){
+			id retweet = [cell retweetedStatus];
+			if(CellCheck(pref, retweet)){
+				return YES;
+			}
+		}
+		if(CellCheck(pref, cell)){
 			return YES;
 		}
 	}
@@ -224,3 +239,26 @@ id indexPath;
 	%orig;
 }
 %end
+//Filter initial items
+%hook HomeViewController
+- (void)viewWillAppear:(BOOL)arg1{
+	Ivar var;
+	var = class_getInstanceVariable([self class], "_timelineItems");
+	id _items = object_getIvar(self, var);
+	id _cell = nil;
+	NSMutableArray* discard = [NSMutableArray array];
+	for(_cell in _items){
+		if(CellFilter(_cell)){
+			[discard addObject: _cell];
+		}
+	}
+	[_items removeObjectsInArray: discard];
+	%orig;
+}
+%end
+
+
+
+
+
+

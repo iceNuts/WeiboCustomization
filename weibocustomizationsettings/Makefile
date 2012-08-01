@@ -2,7 +2,7 @@ GO_EASY_ON_ME=1
 include theos/makefiles/common.mk
 
 BUNDLE_NAME = weibocustomizationsettings
-weibocustomizationsettings_FILES = weibocustomizationsettings.mm wcfilterListController.mm
+weibocustomizationsettings_FILES = weibocustomizationsettings.mm wcfilterListController.mm wcfilterDangerListController.mm
 weibocustomizationsettings_INSTALL_PATH = /Library/PreferenceBundles
 weibocustomizationsettings_FRAMEWORKS = UIKit
 weibocustomizationsettings_PRIVATE_FRAMEWORKS = Preferences
