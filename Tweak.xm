@@ -180,8 +180,9 @@ BOOL CellCheck(id pref, id cell){
 	for(int i = 1; i <= 5; i++){
 		id str = [pref valueForKey: [@"dangerkey" stringByAppendingFormat: @"%i", i]];
 		if(str){
-			NSRange range = [[cell text] rangeOfString: str options: 0];
-			if(range.location != NSNotFound){
+			NSRange range1 = [[cell text] rangeOfString: str options: 0];
+			NSRange range2 = [[[cell user] screenName] rangeOfString: str options: 0];
+			if(range1.location != NSNotFound || range2.location != NSNotFound){
 				return YES;
 			}
 		}
